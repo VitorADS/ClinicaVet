@@ -1,0 +1,43 @@
+Casos de Uso:
+--------------------------------------
+1. Gerenciar Animais
+   - Cadastrar Animal
+   - Editar Animal
+   - Excluir Animal
+   - Buscar Animal (por cor, raça, tamanho)
+   - Vincular Responsável ao Animal
+
+2. Gerenciar Atendimentos
+   - Registrar Atendimento
+   - Editar Atendimento
+   - Excluir Atendimento
+   - Listar Atendimentos por Período
+   - Vincular Vacina ao Atendimento
+
+3. Gerenciar Clínicas
+   - Cadastrar Clínica
+   - Editar Clínica
+   - Excluir Clínica
+
+4. Gerenciar Médicos Veterinários
+   - Cadastrar Veterinário
+   - Editar Veterinário
+   - Excluir Veterinário
+
+5. Gerenciar Cobranças
+   - Emitir Cobrança de Atendimento (Boleto, PIX, Cartão de Crédito)
+
+6. Gerenciar Tipos de Animais e Raças
+   - Cadastrar Tipo de Animal
+   - Cadastrar Raça de Animal
+   - Vincular Raça a Tipo de Animal
+
+7. Gerenciar Vacinas
+   - Cadastrar Vacina
+   - Editar Vacina
+   - Excluir Vacina
+
+Relacionamentos:
+--------------------------------------
+- O Ator Veterinário pode realizar todos os casos de uso relacionados a Animais e Atendimentos.
+- O Ator Administrador pode realizar todos os casos de uso do sistema, incluindo gerenciamento de Clínicas, Médicos Veterinários, Cobranças, Tipos de Animais, Raças e Vacinas.
