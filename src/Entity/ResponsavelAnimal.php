@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
 #[ORM\Table(schema: 'clinica', name: 'responsavel_animal')]
 #[ORM\Entity(ResponsavelAnimalRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class ResponsavelAnimal{
+class ResponsavelAnimal extends AbstractEntity
+{
 
     use Timestamps;
     

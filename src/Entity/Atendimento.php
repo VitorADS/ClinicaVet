@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
 #[ORM\Table(schema: 'clinica', name: 'atendimento')]
 #[ORM\Entity(AtendimentoRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Atendimento{
+class Atendimento extends AbstractEntity 
+{
 
     use Timestamps;
     

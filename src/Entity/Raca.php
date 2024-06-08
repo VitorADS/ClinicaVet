@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(schema: 'clinica', name: 'raca')]
 #[ORM\Entity(RacaRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Raca{
+class Raca extends AbstractEntity
+{
 
     use Timestamps;
     

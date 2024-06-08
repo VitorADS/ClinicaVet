@@ -13,7 +13,8 @@ use Doctrine\ORM\PersistentCollection;
 #[ORM\Table(schema: 'clinica', name: 'clinica')]
 #[ORM\Entity(ClinicaRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Clinica{
+class Clinica extends AbstractEntity
+{
 
     use Timestamps;
     

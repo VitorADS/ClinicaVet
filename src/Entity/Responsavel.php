@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(schema: 'clinica', name: 'responsavel')]
 #[ORM\Entity(ResponsavelRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Responsavel{
+class Responsavel extends AbstractEntity
+{
 
     use Timestamps;
     

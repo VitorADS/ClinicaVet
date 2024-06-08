@@ -17,7 +17,8 @@ use Doctrine\ORM\PersistentCollection;
 #[ORM\Table(schema: 'clinica', name: 'animal')]
 #[ORM\Entity(AnimalRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Animal{
+class Animal extends AbstractEntity
+{
 
     use Timestamps;
     
