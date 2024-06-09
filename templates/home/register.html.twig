@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% include "alerts/message.html.twig" %}
+
+    {{ form(registerForm) }}
+{% endblock %}

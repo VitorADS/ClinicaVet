@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    {% include "alerts/message.html.twig" %}
+
+    <form action="{{ path('app_home_login') }}" method="post">
+        <div class="form-group mb-3">
+            <label class="form-label" for="username">E-mail:</label>
+            <input class="form-control" type="email" id="username" name="_username" value="">
+            <small class="form-text text-muted">E-mail para login</small>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label" for="password">Senha:</label>
+            <input class="form-control" type="password" id="password" name="_password">
+        </div>
+
+        <button class="btn btn-secondary" type="submit">Entrar</button>
+    </form>
+{% endblock %}

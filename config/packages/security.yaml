@@ -7,7 +7,7 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
-                class: App\Entity\User
+                class: App\Entity\Profissional
                 property: email
     firewalls:
         dev:
@@ -16,6 +16,15 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+
+            form_login:
+                # "app_login" is the name of the route created previously
+                login_path: app_home_login
+                check_path: app_home_login
+                default_target_path: app_atendimento_home
+
+            logout:
+                path: app_home_logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -26,8 +35,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/atendimento, roles: ROLE_USER }
+        - { path: ^/clinica, roles: ROLE_USER }
+        - { path: ^/logout, roles: ROLE_USER }
+        - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
