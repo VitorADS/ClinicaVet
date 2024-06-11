@@ -217,7 +217,7 @@ class Atendimento extends AbstractEntity
     /**
      * @return Pagamento
      */
-    public function getPagamento(): Pagamento
+    public function getPagamento(): ?Pagamento
     {
         return $this->pagamento;
     }

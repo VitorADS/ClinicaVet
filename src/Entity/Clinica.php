@@ -118,4 +118,9 @@ class Clinica extends AbstractEntity
     {
         $this->telefone = $telefone;
     }
+
+    public function __toString(): string
+    {
+        return $this->getNome();
+    }
 }

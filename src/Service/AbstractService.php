@@ -14,10 +14,10 @@ abstract class AbstractService
 
     public function __construct(
         private EntityManagerInterface $entityManager,
-        string                         $entityClass
+        private string $entityClass
     )
     {
-        $this->repository = $this->entityManager->getRepository($entityClass);
+        $this->repository = $this->entityManager->getRepository($this->entityClass);
     }
 
     public function find(int $id): ?AbstractEntity
@@ -48,6 +48,11 @@ abstract class AbstractService
     public function getEntityManager(): EntityManagerInterface
     {
         return $this->entityManager;
+    }
+
+    public function getEntityClass(): string
+    {
+        return $this->entityClass;
     }
 
     public function save(AbstractEntity $entity, ?int $id = null): AbstractEntity

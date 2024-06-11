@@ -10,6 +10,10 @@
                 <a class="nav-link text-white {% if 'app_clinica_home' == app.request.get('_route') %} active{% endif %}"
                     href="{{path('app_clinica_home')}}">Clinicas</a>
             </nav>
+            <nav class="nav nav-pills flex-column">
+                <a class="nav-link text-white {% if 'app_clinica_criar' == app.request.get('_route') %} active{% endif %}"
+                    href="{{path('app_clinica_criar')}}">Criar clinica</a>
+            </nav>
         </div>
         <div class="col bg-dark text-white p-3" style="height: 100%;">
             {% block content %}{% endblock %}
