@@ -5,15 +5,17 @@ namespace App\Controller;
 use App\Entity\AbstractEntity;
 use App\Service\AbstractService;
 use App\Utils\Form;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as ControllerAbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractController extends ControllerAbstractController
 {
     protected string $entity;
+    protected ?AbstractEntity $registro = null;
+    protected array $viewParams = [];
 
     public function __construct(
         protected string $form,
@@ -25,7 +27,7 @@ abstract class AbstractController extends ControllerAbstractController
     }
 
     // #[Route('/view', name: 'app_view_home')]
-    public function index(): Response
+    protected function index(): Response
     {
         $user = $this->getUser();
         $registros = $this->service->findBy([]);
@@ -37,14 +39,16 @@ abstract class AbstractController extends ControllerAbstractController
     }
 
     // #[Route('/view/criar', name: 'app_view_criar', methods:['GET', 'POST'])]
-    public function create(Request $request): Response
+    protected function create(Request $request): Response
     {
         $user = $this->getUser();
         $entity = new $this->entity();
         $form = $this->createForm($this->form, $entity);
+        $this->viewParams['user'] = $user;
+        $this->viewParams['form'] = $form;
 
         if($request->getMethod() === Request::METHOD_GET){
-            return $this->render("{$this->view}/create.html.twig", compact('user', 'form'));
+            return $this->render("{$this->view}/create.html.twig", $this->viewParams);
         }
 
         $form->handleRequest($request);
@@ -57,48 +61,49 @@ abstract class AbstractController extends ControllerAbstractController
 
         $error = Form::getErrorsForm($form);
         $this->addFlash('danger', $error);
-        return $this->render("{$this->view}/create.html.twig", compact('user', 'form'));
+        return $this->render("{$this->view}/create.html.twig", $this->viewParams);
     }
 
     // #[Route('/view/editar/{id}', name: 'app_view_editar', methods:['GET', 'POST'])]
-    public function editar(Request $request, int $id): Response
+    protected function editar(Request $request, int $id): Response
     {
-        $entity = $this->service->find($id);
-
-        if(!$entity instanceof AbstractEntity){
+        if(!$this->existeRegistro($id)){
             $this->addFlash('danger', 'Registro nao encontrado!');
         } else {
             $user = $this->getUser();
-            $form = $this->createForm($this->form, $entity, ['editar' => true]);
+            $form = $this->createForm($this->form, $this->registro, ['editar' => true]);
+            $this->viewParams['user'] = $user;
+            $this->viewParams['form'] = $form;
+            $this->viewParams['registro'] = $this->registro;
 
             if($request->getMethod() === Request::METHOD_GET){
-                return $this->render("{$this->view}/editar.html.twig", compact('user', 'form'));
+                return $this->render("{$this->view}/editar.html.twig", $this->viewParams);
             }
 
             $form->handleRequest($request);
 
             if($form->isValid()){
-                $entity = $this->service->save($entity, $id);
+                $this->registro = $this->service->save($this->registro, $id);
                 $this->addFlash('success', 'Registro editado com sucesso');
                 return $this->redirectToRoute("app_{$this->view}_home");
             }
 
             $error = Form::getErrorsForm($form);
             $this->addFlash('danger', $error);
-            return $this->render("{$this->view}/editar.html.twig", compact('user', 'form'));
+            return $this->render("{$this->view}/editar.html.twig", $this->viewParams);
         }
+
+        return $this->redirectToRoute("app_{$this->view}_home");
     }
 
     // #[Route('/view/remover/{id}', name: 'app_view_editar', methods:['POST'])]
-    public function remove(Request $request, int $id): Response
+    protected function remove(Request $request, int $id): Response
     {
-        $entity = $this->service->find($id);
-
-        if(!$entity instanceof AbstractEntity){
+        if(!$this->existeRegistro($id)){
             $this->addFlash('danger', 'Registro nao encontrado!');
         } else {
             try{
-                $this->service->remove($entity);
+                $this->service->remove($this->registro);
                 $this->addFlash('success', 'Registro removido!');
             }catch(Exception $e){
                 $this->addFlash('danger', $e->getMessage());
@@ -106,5 +111,17 @@ abstract class AbstractController extends ControllerAbstractController
         }
 
         return $this->redirectToRoute("app_{$this->view}_home");
+    }
+
+    protected function existeRegistro(int $id): bool
+    {
+        $registro = $this->service->find($id);
+
+        if($registro instanceof AbstractEntity){
+            $this->registro = $registro;
+            return true;
+        }
+
+        return false;
     }
 }

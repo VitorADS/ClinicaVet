@@ -4,5 +4,35 @@
 
 {% block content %}
 {% include "alerts/message.html.twig" %}
-    {{ form(form) }}
+    {{ form(form) }} <hr>
+
+    <div class="form-container">
+        <h3>Profissionais</h3>
+        
+        <table class="table table-dark table-striped border border-black text-center mt-2">
+            <a class="btn btn-sm btn-primary" href="{{path('app_clinica_profissional_add', {id: registro.id})}}">Adicionar</a>
+            <thead>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Acoes</th>
+            </thead>
+            <tbody>
+                {% for profissional in profissionais %}
+                    <tr>
+                        <td>{{ profissional.profissional.nome }}</td>
+                        <td>{{ profissional.profissional.email }}</td>
+                        <td>{{ profissional.profissional.telefone }}</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <form action="{{path('app_clinica_profissional_remover', {id: profissional.id})}}" method="POST">
+                                    <button class="btn btn-sm btn-danger ms-1">X</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

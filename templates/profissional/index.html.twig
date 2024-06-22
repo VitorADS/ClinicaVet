@@ -1,0 +1,35 @@
+{% extends 'profissional/baseprofissional.html.twig' %}
+
+{% block title %}Profissionais{% endblock %}
+
+{% block content %}
+{% include "alerts/message.html.twig" %}
+
+<table class="table table-dark table-striped border border-black text-center mt-4">
+    <thead>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Telefone</th>
+        <th>Acoes</th>
+    </thead>
+    <tbody>
+        {% for registro in registros %}
+            <tr>
+                <td>{{ registro.nome }}</td>
+                <td>{{ registro.email }}</td>
+                <td>{{ registro.telefone }}</td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{path('app_profissional_editar', {id: registro.id})}}" class="btn btn-sm btn-primary">
+                            E
+                        </a>
+                        <form action="{{path('app_profissional_remover', {id: registro.id})}}" method="POST">
+                            <button class="btn btn-sm btn-danger ms-1">X</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

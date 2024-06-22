@@ -48,7 +48,7 @@ class AtendimentoType extends AbstractType
                 'choice_label' => 'id',
             ])
             ->add('submit', SubmitType::class, [
-                'label' => $options['editar'] ? 'Editar' : 'Criar',
+                'label' => $options['editar'] ? 'Salvar' : 'Criar',
                 'attr' => [
                     'class' => 'btn-secondary'
                 ]

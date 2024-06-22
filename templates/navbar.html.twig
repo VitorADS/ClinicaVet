@@ -8,12 +8,16 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-4 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link {% if 'app_atendimento_home' == app.request.get('_route') %} active{% endif %}"
+                    <a class="nav-link {% if 'atendimento' in app.request.get('_route') %} active{% endif %}"
                     aria-current="page" href="{{path('app_atendimento_home')}}">Atendimentos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if 'clinica' in app.request.get('_route') %} active{% endif %}"
-                    aria-current="page" href="{{path('app_clinica_home')}}">Clinica</a>
+                    aria-current="page" href="{{path('app_clinica_home')}}">Clinicas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'profissional' in app.request.get('_route') %} active{% endif %}"
+                    aria-current="page" href="{{path('app_profissional_home')}}">Profissionais</a>
                 </li>
                 {# {% if 'ROLE_ADMIN' in user.roles %}                
                     <li class="nav-item">

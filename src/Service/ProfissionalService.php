@@ -13,4 +13,9 @@ class ProfissionalService extends AbstractService
     {
         parent::__construct($entityManager, Profissional::class);
     }
+
+    public function getProfissionaisCadastraveis(int $clinica): ?array
+    {
+        return $this->getRepository()->getProfissionaisCadastraveis($clinica);
+    }
 }

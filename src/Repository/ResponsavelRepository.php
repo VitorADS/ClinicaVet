@@ -14,7 +14,7 @@ class ResponsavelRepository extends AbstractRepository
         parent::__construct($registry, Responsavel::class);
     }
 
-    public function getResponsaveisCadastraveis(Animal $animal)
+    public function getResponsaveisCadastraveis(Animal $animal): ?array
     {
         $subConsulta = $this->getEntityManager()->createQueryBuilder();
         $subConsulta->select('ra');

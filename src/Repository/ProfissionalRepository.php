@@ -14,7 +14,7 @@ class ProfissionalRepository extends AbstractRepository
         parent::__construct($registry, Profissional::class);
     }
 
-    public function getProfissionaisCadastraveis(Clinica $clinica)
+    public function getProfissionaisCadastraveis(int $clinica): ?array
     {
         $subConsulta = $this->getEntityManager()->createQueryBuilder();
         $subConsulta->select('pc');
