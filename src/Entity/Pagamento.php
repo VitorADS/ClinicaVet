@@ -51,4 +51,9 @@ class Pagamento extends AbstractEntity
     {
         $this->pagamento = $pagamento;
     }
+
+    public function __tostring(): string
+    {
+        return $this->getPagamento() . " ({$this->getId()})";
+    }
 }

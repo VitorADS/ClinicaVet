@@ -31,21 +31,23 @@ class AtendimentoType extends AbstractType
             ])
             ->add('clinica', EntityType::class, [
                 'class' => Clinica::class,
+                'choices' => $options['clinica'],
                 'choice_label' => function (Clinica $clinica): string {
                     return $clinica;
                 }
             ])
             ->add('profissionalClinica', EntityType::class, [
                 'class' => ProfissionalClinica::class,
-                'choice_label' => 'id',
+                'choices' => $options['profissionaisClinica'],
+                'choice_label' => function (ProfissionalClinica $profissionalClinica): string {
+                    return $profissionalClinica->getProfissional();
+                }
             ])
             ->add('statusAtendimento', EntityType::class, [
                 'class' => StatusAtendimento::class,
-                'choice_label' => 'id',
             ])
             ->add('pagamento', EntityType::class, [
                 'class' => Pagamento::class,
-                'choice_label' => 'id',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $options['editar'] ? 'Salvar' : 'Criar',
@@ -60,7 +62,9 @@ class AtendimentoType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Atendimento::class,
-            'editar' => false
+            'editar' => false,
+            'profissionaisClinica' => [],
+            'clinica' => null
         ]);
     }
 }

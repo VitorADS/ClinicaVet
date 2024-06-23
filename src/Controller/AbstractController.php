@@ -16,6 +16,7 @@ abstract class AbstractController extends ControllerAbstractController
     protected string $entity;
     protected ?AbstractEntity $registro = null;
     protected array $viewParams = [];
+    protected array $formParams = [];
 
     public function __construct(
         protected string $form,
@@ -42,8 +43,12 @@ abstract class AbstractController extends ControllerAbstractController
     protected function create(Request $request): Response
     {
         $user = $this->getUser();
-        $entity = new $this->entity();
-        $form = $this->createForm($this->form, $entity);
+
+        if(!$this->registro instanceof AbstractEntity){
+            $this->registro = new $this->entity();
+        }
+    
+        $form = $this->createForm($this->form, $this->registro, $this->formParams);
         $this->viewParams['user'] = $user;
         $this->viewParams['form'] = $form;
 
@@ -54,7 +59,7 @@ abstract class AbstractController extends ControllerAbstractController
         $form->handleRequest($request);
 
         if($form->isValid()){
-            $entity = $this->service->save($entity);
+            $entity = $this->service->save($this->registro);
             $this->addFlash('success', 'Registro criado com sucesso!');
             return $this->redirectToRoute("app_{$this->view}_editar", ['id' => $entity->getId()]);
         }
@@ -70,8 +75,9 @@ abstract class AbstractController extends ControllerAbstractController
         if(!$this->existeRegistro($id)){
             $this->addFlash('danger', 'Registro nao encontrado!');
         } else {
+            $this->formParams['editar'] = true;
             $user = $this->getUser();
-            $form = $this->createForm($this->form, $this->registro, ['editar' => true]);
+            $form = $this->createForm($this->form, $this->registro, $this->formParams);
             $this->viewParams['user'] = $user;
             $this->viewParams['form'] = $form;
             $this->viewParams['registro'] = $this->registro;

@@ -51,4 +51,9 @@ class StatusAtendimento extends AbstractEntity
     {
         $this->status = $status;
     }
+
+    public function __tostring(): string
+    {
+        return $this->getStatus() . " ({$this->getId()})";
+    }
 }

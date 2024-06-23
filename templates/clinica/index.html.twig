@@ -1,6 +1,6 @@
 {% extends 'clinica/baseclinica.html.twig' %}
 
-{% block title %}Hello ClinicaController!{% endblock %}
+{% block title %}Clinicas{% endblock %}
 
 {% block content %}
 {% include "alerts/message.html.twig" %}
@@ -20,11 +20,14 @@
                 <td>{{ registro.telefone }}</td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <a href="{{path('app_clinica_editar', {id: registro.id})}}" class="btn btn-sm btn-primary">
+                        <a href="{{path('app_atendimento_criar', {clinica: registro.id})}}" class="btn btn-sm btn-primary me-1" title="Atender">
+                            A
+                        </a>
+                        <a href="{{path('app_clinica_editar', {id: registro.id})}}" class="btn btn-sm btn-primary" title="Editar">
                             E
                         </a>
                         <form action="{{path('app_clinica_remover', {id: registro.id})}}" method="POST">
-                            <button class="btn btn-sm btn-danger ms-1">X</button>
+                            <button class="btn btn-sm btn-danger ms-1" title="Remover">X</button>
                         </form>
                     </div>
                 </td>

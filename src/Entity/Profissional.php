@@ -7,7 +7,6 @@ use App\Traits\Timestamps;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -59,9 +58,9 @@ class Profissional extends AbstractEntity implements UserInterface, PasswordAuth
     private ?string $password = null;
 
     /**
-     * @var ArrayCollection
+     * @var PersistentCollection
      */
-    #[OneToMany(targetEntity: ProfissionalClinica::class, mappedBy: 'profissional')]
+    #[ORM\OneToMany(targetEntity: ProfissionalClinica::class, mappedBy: 'profissional')]
     private Collection $profissionaisClinica;
 
     public function __construct()
@@ -185,5 +184,10 @@ class Profissional extends AbstractEntity implements UserInterface, PasswordAuth
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function __tostring(): string
+    {
+        return $this->getNome() . " ({$this->getId()})";
     }
 }

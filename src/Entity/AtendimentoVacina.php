@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\AtendimentoVacinaRepository;
 use App\Traits\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Table(schema: 'clinica', name: 'atendimento_vacina')]
 #[ORM\Entity(AtendimentoVacinaRepository::class)]
@@ -27,15 +25,15 @@ class AtendimentoVacina extends AbstractEntity
     /**
      * @var Atendimento
      */
-    #[ManyToOne(targetEntity: Atendimento::class)]
-    #[JoinColumn(name: 'atendimento', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Atendimento::class)]
+    #[ORM\JoinColumn(name: 'atendimento', referencedColumnName: 'id', nullable: false)]
     private Atendimento $atendimento;
 
     /**
      * @var Vacina
      */
-    #[ManyToOne(targetEntity: Vacina::class)]
-    #[JoinColumn(name: 'vacina', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Vacina::class)]
+    #[ORM\JoinColumn(name: 'vacina', referencedColumnName: 'id', nullable: false)]
     private Vacina $vacina;
 
     /**

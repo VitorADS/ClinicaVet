@@ -7,7 +7,6 @@ use App\Traits\Timestamps;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Table(schema: 'clinica', name: 'clinica')]
@@ -47,7 +46,7 @@ class Clinica extends AbstractEntity
     /**
      * @var ArrayCollection
      */
-    #[OneToMany(targetEntity: ProfissionalClinica::class, mappedBy: 'clinica')]
+    #[ORM\OneToMany(targetEntity: ProfissionalClinica::class, mappedBy: 'clinica')]
     private Collection $profissionaisClinica;
 
     public function __construct()

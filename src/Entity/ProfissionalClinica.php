@@ -4,9 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ProfissionalClinicaRepository;
 use App\Traits\Timestamps;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Table(schema: 'clinica', name: 'profissional_clinica')]
 #[ORM\Entity(ProfissionalClinicaRepository::class)]
@@ -27,16 +26,22 @@ class ProfissionalClinica extends AbstractEntity
     /**
      * @var Clinica
      */
-    #[ManyToOne(targetEntity: Clinica::class, inversedBy: 'profissionaisClinica')]
-    #[JoinColumn(name: 'clinica', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Clinica::class, inversedBy: 'profissionaisClinica')]
+    #[ORM\JoinColumn(name: 'clinica', referencedColumnName: 'id', nullable: false)]
     private Clinica $clinica;
 
     /**
      * @var Profissional
      */
-    #[ManyToOne(targetEntity: Profissional::class, inversedBy: 'profissionaisClinica')]
-    #[JoinColumn(name: 'profissional', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Profissional::class, inversedBy: 'profissionaisClinica')]
+    #[ORM\JoinColumn(name: 'profissional', referencedColumnName: 'id', nullable: false)]
     private Profissional $profissional;
+
+    /**
+     * @var \Doctrine\ORM\PersistentCollection
+     */
+    #[ORM\OneToMany(targetEntity: Atendimento::class, mappedBy: 'profissionalClinica')]
+    private Collection $atendimentos;
 
     /**
      * @return int
@@ -76,5 +81,20 @@ class ProfissionalClinica extends AbstractEntity
     public function setProfissional(Profissional $profissional): void
     {
         $this->profissional = $profissional;
+    }
+
+    public function getAtendimentos(): Collection
+    {
+        return $this->atendimentos;
+    }
+
+    public function hasDependents(): bool
+    {
+        return $this->hasItems($this->getAtendimentos());
+    }
+
+    public function __tostring(): string
+    {
+        return $this->getProfissional()->getNome();
     }
 }

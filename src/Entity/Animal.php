@@ -9,8 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\PersistentCollection;
 
@@ -63,15 +61,15 @@ class Animal extends AbstractEntity
     /**
      * @var Tipo
      */
-    #[ManyToOne(targetEntity: Tipo::class)]
-    #[JoinColumn(name: 'tipo', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Tipo::class)]
+    #[ORM\JoinColumn(name: 'tipo', referencedColumnName: 'id', nullable: false)]
     private Tipo $tipo;
 
     /**
      * @var Raca
      */
-    #[ManyToOne(targetEntity: Raca::class)]
-    #[JoinColumn(name: 'raca', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: Raca::class)]
+    #[ORM\JoinColumn(name: 'raca', referencedColumnName: 'id', nullable: true)]
     private ?Raca $raca = null;
 
     /**

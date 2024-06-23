@@ -6,8 +6,6 @@ use App\Repository\AtendimentoRepository;
 use App\Traits\Timestamps;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Table(schema: 'clinica', name: 'atendimento')]
 #[ORM\Entity(AtendimentoRepository::class)]
@@ -46,36 +44,36 @@ class Atendimento extends AbstractEntity
     /**
      * @var Animal
      */
-    #[ManyToOne(targetEntity: Animal::class)]
-    #[JoinColumn(name: 'animal', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Animal::class, inversedBy: 'atendimentos')]
+    #[ORM\JoinColumn(name: 'animal', referencedColumnName: 'id', nullable: false)]
     private Animal $animal;
 
     /**
      * @var Clinica
      */
-    #[ManyToOne(targetEntity: Clinica::class)]
-    #[JoinColumn(name: 'clinica', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Clinica::class)]
+    #[ORM\JoinColumn(name: 'clinica', referencedColumnName: 'id', nullable: false)]
     private Animal $clinica;
 
     /**
      * @var ProfissionalClinica
      */
-    #[ManyToOne(targetEntity: ProfissionalClinica::class)]
-    #[JoinColumn(name: 'profissional_clinica', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: ProfissionalClinica::class, inversedBy: 'atendimentos')]
+    #[ORM\JoinColumn(name: 'profissional_clinica', referencedColumnName: 'id', nullable: false)]
     private ProfissionalClinica $profissionalClinica;
 
     /**
      * @var StatusAtendimento
      */
-    #[ManyToOne(targetEntity: StatusAtendimento::class)]
-    #[JoinColumn(name: 'status_atendimento', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: StatusAtendimento::class)]
+    #[ORM\JoinColumn(name: 'status_atendimento', referencedColumnName: 'id', nullable: false)]
     private StatusAtendimento $statusAtendimento;
 
     /**
      * @var Pagamento
      */
-    #[ManyToOne(targetEntity: Pagamento::class)]
-    #[JoinColumn(name: 'pagamento', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: Pagamento::class)]
+    #[ORM\JoinColumn(name: 'pagamento', referencedColumnName: 'id', nullable: true)]
     private ?Pagamento $pagamento = null;
 
     /**

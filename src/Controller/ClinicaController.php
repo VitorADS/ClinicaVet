@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ProfissionalClinica;
 use App\Form\ClinicaType;
 use App\Service\ClinicaService;
 use App\Service\ProfissionalClinicaService;
@@ -93,9 +94,16 @@ class ClinicaController extends AbstractController
         return $this->redirectToRoute('app_clinica_profissional_add', ['id' => $id]);
     }
 
-    #[Route('/clinica/profissional/remover/{id}', name: 'app_clinica_profissional_remover', methods:['POST'])]
-    public function removerProfissional(Request $request, int $id)
+    #[Route('/clinica/profissional/remover/{profissionalClinica}', name: 'app_clinica_profissional_remover', methods:['POST'])]
+    public function removerProfissional(Request $request, ProfissionalClinica $profissionalClinica, ProfissionalClinicaService $service): Response
     {
-        
+        if($profissionalClinica->hasDependents()){
+            $this->addFlash('danger', 'Profissional possui atendimentos vinculados!');
+            return $this->redirectToRoute('app_clinica_home');
+        }
+
+        $service->remove($profissionalClinica);
+        $this->addFlash('success','Profissional removido!');
+        return $this->redirectToRoute('app_clinica_home');
     }
 }

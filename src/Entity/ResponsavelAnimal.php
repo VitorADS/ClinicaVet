@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\ResponsavelAnimalRepository;
 use App\Traits\Timestamps;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Table(schema: 'clinica', name: 'responsavel_animal')]
 #[ORM\Entity(ResponsavelAnimalRepository::class)]
@@ -27,15 +25,15 @@ class ResponsavelAnimal extends AbstractEntity
     /**
      * @var Animal
      */
-    #[ManyToOne(targetEntity: Animal::class)]
-    #[JoinColumn(name: 'animal', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Animal::class, inversedBy: 'responsaveis')]
+    #[ORM\JoinColumn(name: 'animal', referencedColumnName: 'id', nullable: false)]
     private Animal $animal;
 
     /**
      * @var Responsavel
      */
-    #[ManyToOne(targetEntity: Responsavel::class)]
-    #[JoinColumn(name: 'responsavel', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Responsavel::class)]
+    #[ORM\JoinColumn(name: 'responsavel', referencedColumnName: 'id', nullable: false)]
     private Responsavel $responsavel;
 
     /**
