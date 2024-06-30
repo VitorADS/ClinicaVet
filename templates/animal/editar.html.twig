@@ -15,6 +15,7 @@
             <thead>
                 <th>Nome</th>
                 <th>E-mail</th>
+                <th>Responsavel padrao?</th>
                 <th>Acoes</th>
             </thead>
             <tbody>
@@ -22,8 +23,12 @@
                     <tr>
                         <td>{{ responsavel.responsavel.nome }}</td>
                         <td>{{ responsavel.responsavel.email }}</td>
+                        <td>{% if responsavel.padrao %} Sim {% else %} Nao {% endif %} </td>
                         <td>
                             <div class="d-flex justify-content-center">
+                                <form action="{{path('app_animal_responsavel_padrao', {animal: registro.id})}}" method="POST">
+                                    <button name="responsavel" value="{{responsavel.id}}" class="btn btn-sm btn-success ms-1" title="Definir padrao">P</button>
+                                </form>
                                 <form action="{{path('app_animal_responsavel_remover', {responsavelAnimal: responsavel.id})}}" method="POST">
                                     <button class="btn btn-sm btn-danger ms-1" title="Remover">X</button>
                                 </form>

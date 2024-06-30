@@ -10,24 +10,41 @@ use App\Entity\ProfissionalClinica;
 use App\Entity\StatusAtendimento;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AtendimentoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('observacoes')
-            ->add('descricao')
-            ->add('data', null, [
-                'widget' => 'single_text',
+            ->add('observacoes', TextType::class, [
+                'label' => 'Observacoes',
+                'required' => false
+            ])
+            ->add('descricao', TextType::class, [
+                'label' => 'Descricao',
+                'required' => false
+            ])
+            ->add('data', DateType::class, [
+                'label' => 'Data do atendimentoi',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Informe a data do atendimento'
+                    ])
+                ]
             ])
             ->add('animal', EntityType::class, [
                 'label' => 'Animal',
                 'class' => Animal::class,
-                'choice_label' => 'id',
+                'choice_label' => function (Animal $animal): string {
+                    return $animal;
+                }
             ])
             ->add('clinica', EntityType::class, [
                 'class' => Clinica::class,

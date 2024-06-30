@@ -74,7 +74,7 @@ class Animal extends AbstractEntity
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity: ResponsavelAnimal::class, mappedBy: 'animal')]
+    #[ORM\OneToMany(targetEntity: ResponsavelAnimal::class, mappedBy: 'animal', cascade: ['remove'])]
     private Collection $responsaveis;
 
     /**
@@ -230,6 +230,15 @@ class Animal extends AbstractEntity
         return $this->atendimentos;
     }
 
+    public function verificaResponsavel(int $idResponsavelAnimal): bool
+    {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('id', $idResponsavelAnimal));
+        $result = $this->getResponsaveis()->matching($criteria);
+
+        return $result->count() > 0 ? true : false;
+    }
+
     public function getResponsavelPadrao(): ?ResponsavelAnimal
     {
         $criteria = Criteria::create();
@@ -237,5 +246,10 @@ class Animal extends AbstractEntity
         $result = $this->getResponsaveis()->matching($criteria);
 
         return $result->count() === 1 ? $result->first() : null;
+    }
+
+    public function __tostring(): string
+    {
+        return $this->getNome() . ' (Responsavel: ' . $this->getResponsavelPadrao()->getResponsavel()->getNome() . ") ({$this->getId()})";
     }
 }

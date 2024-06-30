@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Animal;
 use App\Entity\ResponsavelAnimal;
 use App\Form\AnimalType;
 use App\Service\AnimalService;
@@ -72,13 +73,18 @@ class AnimalController extends AbstractController
 
         try{
             $values = $request->request->all();
+            $padrao = filter_input(INPUT_POST, 'padrao', FILTER_VALIDATE_INT);
 
             if(empty($values['id'])){
                 throw new \Exception('Selecione ao menos um responsavel!');
             }
 
+            if(!$this->registro->getResponsavelPadrao() && !in_array($padrao, $values['id'])){
+                throw new \Exception('O responsavel padrao nao foi selecionado!');
+            }
+
             $ids = $values['id'];
-            $responsavelAnimalService->adicionarResponsavelAnimal($ids, $id);
+            $responsavelAnimalService->adicionarResponsavelAnimal($ids, $this->registro, $padrao);
             $this->addFlash('success', 'Responsaveis vinculados!');
             return $this->redirectToRoute('app_animal_editar', ['id' => $id]);
         }catch(\Exception $e){
@@ -88,12 +94,33 @@ class AnimalController extends AbstractController
         return $this->redirectToRoute('app_animal_responsavel_add', ['id' => $id]);
     }
 
+    #[Route('/animal/responsavel/padrao/{animal}', name: 'app_animal_responsavel_padrao', methods:['POST'])]
+    public function definirResponsavelPadrao(Request $request, Animal $animal, ResponsavelAnimalService $responsavelAnimalService): Response
+    {
+        $idResponsavelAnimal = filter_input(INPUT_POST, 'responsavel', FILTER_VALIDATE_INT);
+
+        try{
+            $this->service->defineResponsavel($idResponsavelAnimal, $animal, $responsavelAnimalService);
+            $this->addFlash('success', 'Responsavel definido!');
+        }catch(\Throwable $e){
+            $this->addFlash('danger', $e->getMessage());
+        }
+
+        return $this->redirectToRoute('app_animal_editar', ['id' => $animal->getId()]);
+    }
+
     #[Route('/animal/responsavel/remover/{responsavelAnimal}', name: 'app_animal_responsavel_remover', methods:['POST'])]
     public function removerResponsavel(Request $request, ResponsavelAnimal $responsavelAnimal, ResponsavelAnimalService $service): Response
     {
         $idAnimal = $responsavelAnimal->getAnimal()->getId();
-        $service->remove($responsavelAnimal);
-        $this->addFlash('success','Responsavel removido!');
+
+        try{
+            $service->remove($responsavelAnimal);
+            $this->addFlash('success','Responsavel removido!');
+        }catch(\Throwable $e){
+            $this->addFlash('danger', $e->getMessage());
+        }
+        
         return $this->redirectToRoute('app_animal_editar', ['id' => $idAnimal]);
     }
 }

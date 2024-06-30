@@ -12,16 +12,21 @@ class ResponsavelAnimalRepository extends AbstractRepository
         parent::__construct($registry, ResponsavelAnimal::class);
     }
 
-    public function insereResponsavelAnimal(array $ids, int $idAnimal): void
+    public function insereResponsavelAnimal(array $ids, int $idAnimal, ?int $padrao = null): void
     {
-        $sql = " INSERT INTO clinica.responsavel_animal (animal, responsavel) VALUES ";
+        $sql = " INSERT INTO clinica.responsavel_animal (animal, responsavel, padrao) VALUES ";
         
         $lastKey = array_key_last($ids);
         foreach($ids as $key => $id){
+            $definirPadrao = 'false';
+            if((int) $id === $padrao){
+                $definirPadrao = 'true';
+            }
+
             if($key != $lastKey){
-                $sql .= " ({$idAnimal}, {$id}), ";
+                $sql .= " ({$idAnimal}, {$id}, {$definirPadrao}), ";
             } else {
-                $sql .= " ({$idAnimal}, {$id}) ";
+                $sql .= " ({$idAnimal}, {$id}, {$definirPadrao}) ";
             }
         }
 
@@ -29,6 +34,11 @@ class ResponsavelAnimalRepository extends AbstractRepository
         try{
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
             $stmt->executeQuery();
+
+            if($padrao){
+                $this->getEntityManager()->flush();
+            }
+
             $this->getEntityManager()->commit();
         }catch(\Exception $e){
             $this->getEntityManager()->rollback();
