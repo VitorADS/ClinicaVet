@@ -39,7 +39,7 @@ class ClinicaController extends AbstractController
     {
         if(!$this->existeRegistro($id)){
             $this->addFlash('danger', 'Clinica nao encontrada');
-            return $this->redirectToRoute('app_clinica_home', ['user' => $this->getUser()]);
+            return $this->redirectToRoute('app_clinica_home');
         }
         
         $this->viewParams['profissionais'] = $this->registro->getProfissionaisClinica();
@@ -64,7 +64,7 @@ class ClinicaController extends AbstractController
 
         if(!$this->existeRegistro($id)){
             $this->addFlash('danger', 'Clinica nao encontrada');
-            return $this->redirectToRoute('app_clinica_home', [$user]);
+            return $this->redirectToRoute('app_clinica_home');
         }
 
         $profissionais = $profissionalService->getProfissionaisCadastraveis($id);

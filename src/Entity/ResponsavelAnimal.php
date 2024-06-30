@@ -32,7 +32,7 @@ class ResponsavelAnimal extends AbstractEntity
     /**
      * @var Responsavel
      */
-    #[ORM\ManyToOne(targetEntity: Responsavel::class)]
+    #[ORM\ManyToOne(targetEntity: Responsavel::class, inversedBy: 'animais')]
     #[ORM\JoinColumn(name: 'responsavel', referencedColumnName: 'id', nullable: false)]
     private Responsavel $responsavel;
 

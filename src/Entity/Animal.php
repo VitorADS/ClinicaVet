@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Table(schema: 'clinica', name: 'animal')]
@@ -75,13 +74,13 @@ class Animal extends AbstractEntity
     /**
      * @var ArrayCollection
      */
-    #[OneToMany(targetEntity: ResponsavelAnimal::class, mappedBy: 'animal')]
+    #[ORM\OneToMany(targetEntity: ResponsavelAnimal::class, mappedBy: 'animal')]
     private Collection $responsaveis;
 
     /**
      * @var ArrayCollection
      */
-    #[OneToMany(targetEntity: Atendimento::class, mappedBy: 'animal')]
+    #[ORM\OneToMany(targetEntity: Atendimento::class, mappedBy: 'animal')]
     private Collection $atendimentos;
 
     public function __construct()

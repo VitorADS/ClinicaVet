@@ -13,4 +13,9 @@ class AnimalService extends AbstractService
     {
         parent::__construct($entityManager, Animal::class);
     }
+
+    public function getResponsaveisCadastraveis(int $id): ?array
+    {
+        return $this->getRepository()->getResponsaveisCadastraveis($id);
+    }
 }

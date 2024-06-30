@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ResponsavelRepository;
 use App\Traits\Timestamps;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Table(schema: 'clinica', name: 'responsavel')]
 #[ORM\Entity(ResponsavelRepository::class)]
@@ -39,6 +42,14 @@ class Responsavel extends AbstractEntity
      */
     #[ORM\Column(name: 'telefone', type:'string', nullable: false)]
     private string $telefone;
+
+    #[ORM\OneToMany(targetEntity: ResponsavelAnimal::class, mappedBy: 'responsavel')]
+    private Collection $animais;
+
+    public function __construct()
+    {
+        $this->animais = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -94,5 +105,13 @@ class Responsavel extends AbstractEntity
     public function setTelefone(string $telefone): void
     {
         $this->telefone = $telefone;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getResponsavelAnimal(): Collection
+    {
+        return $this->animais;
     }
 }

@@ -40,6 +40,20 @@ final class Version20240610234723 extends AbstractMigration
             ('Medio'),
             ('Grande');
         ");
+
+        $this->addSql("
+            insert into clinica.raca (raca) values
+            ('Pinscher'),
+            ('Rottweiler'),
+            ('Dachshund'),
+            ('Labrador'),
+            ('Poodle'),
+            ('Bulldog'),
+            ('Beagle'),
+            ('Chihuahua'),
+            ('Husky'),
+            ('Shih-tzu');
+        ");
     }
 
     public function down(Schema $schema): void

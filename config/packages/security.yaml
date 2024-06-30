@@ -38,6 +38,9 @@ security:
         - { path: ^/atendimento, roles: ROLE_USER }
         - { path: ^/clinica, roles: ROLE_USER }
         - { path: ^/logout, roles: ROLE_USER }
+        - { path: ^/profissional, roles: ROLE_USER }
+        - { path: ^/responsavel, roles: ROLE_USER }
+        - { path: ^/animal, roles: ROLE_USER }
         - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:

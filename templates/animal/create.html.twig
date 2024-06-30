@@ -1,0 +1,11 @@
+{% extends '/animal/baseanimal.html.twig' %}
+
+{% block title %}Cadastrar animal{% endblock %}
+
+{% block content %}
+{% include "alerts/message.html.twig" %}
+    <div class="form-container">
+        <h3>Cadastrar animal</h3><hr>
+        {{ form(form) }}
+    </div>
+{% endblock %}

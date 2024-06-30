@@ -51,4 +51,9 @@ class Raca extends AbstractEntity
     {
         $this->raca = $raca;
     }
+
+    public function __tostring(): string
+    {
+        return $this->getRaca() . " ({$this->getId()})";
+    }
 }

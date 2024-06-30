@@ -1,35 +1,37 @@
 {% extends '/animal/baseanimal.html.twig' %}
 
-{% block title %}Animais{% endblock %}
+{% block title %}Responsaveis{% endblock %}
 
 {% block content %}
 {% include "alerts/message.html.twig" %}
 {% if registros is empty %}
     <div class="container d-flex justify-content-center align-items-center" style="height: 100%">
         <div class="row justify-content-center">
-            <h4>Sem animais cadastrados ate o momento...</h4>
+            <h4>Sem responsaveis cadastrados ate o momento...</h4>
         </div>
     </div>
 {% else %}
 
-<h3>Animais</h3><hr>
+<h3>Responsaveis</h3><hr>
 <table class="table table-dark table-striped border border-black text-center mt-4">
     <thead>
         <th>Nome</th>
-        <th>Responsavel</th>
+        <th>E-mail</th>
+        <th>Telefone</th>
         <th>Acoes</th>
     </thead>
     <tbody>
         {% for item in registros %}
             <tr>
                 <td>{{item.nome}} </td>
-                <td>{{item.cor}} </td>
+                <td>{{item.email}} </td>
+                <td>{{item.telefone}} </td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <a href="{{path('app_animal_editar', {id: item.id})}}" class="btn btn-sm btn-primary" title="Editar">
+                        <a href="{{path('app_responsavel_editar', {id: item.id})}}" class="btn btn-sm btn-primary" title="Editar">
                             E
                         </a>
-                        <form action="{{path('app_animal_remover', {id: item.id})}}" method="POST">
+                        <form action="{{path('app_responsavel_remover', {id: item.id})}}" method="POST">
                             <button class="btn btn-sm btn-danger ms-1" title="Remover">X</button>
                         </form>
                     </div>

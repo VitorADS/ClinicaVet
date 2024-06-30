@@ -1,9 +1,14 @@
 .form-container {
-    max-height: 650px;
+    max-height: 600px;
     overflow-y: auto;
 }
 
 .form-container-table {
-    max-height: 300px;
-    overflow-y: auto;
+    max-height: 240px;
+    overflow-y: scroll;
+}
+
+.bg-menu{
+    background-color: rgb(19, 21, 24);
+    border-radius: 5px;
 }

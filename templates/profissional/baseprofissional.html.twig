@@ -5,7 +5,8 @@
 {% block body %}
 <div class="bg-dark text-white p-3 border border-black rounded-bottom">
     <div class="row align-items-start" style="height: {{altura_conteudo}};">
-        <div class="col-2 bg-black pt-3 me-2 rounded" style="height: 100%;">
+        <div class="col-2 pt-3 me-2 bg-menu" style="height: 100%;">
+            <h3 class="text-center">Menu</h3> <hr>
             <nav class="nav nav-pills flex-column">
                 <a class="nav-link text-white {% if 'app_profissional_home' == app.request.get('_route') %} active{% endif %}"
                     href="{{path('app_profissional_home')}}">Profissionais</a>

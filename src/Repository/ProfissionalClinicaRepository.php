@@ -28,7 +28,7 @@ class ProfissionalClinicaRepository extends AbstractRepository
         $this->getEntityManager()->beginTransaction();
         try{
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-            $stmt->execute();
+            $stmt->executeStatement();
             $this->getEntityManager()->commit();
         }catch(\Exception $e){
             $this->getEntityManager()->rollback();

@@ -51,4 +51,9 @@ class Tipo extends AbstractEntity
     {
         $this->tipo = $tipo;
     }
+
+    public function __tostring(): string
+    {
+        return $this->getTipo() . " ({$this->getId()})";
+    }
 }

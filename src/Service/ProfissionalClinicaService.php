@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\AbstractEntity;
 use App\Entity\ProfissionalClinica;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
