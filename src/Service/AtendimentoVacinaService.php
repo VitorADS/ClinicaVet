@@ -13,4 +13,15 @@ class AtendimentoVacinaService extends AbstractService
     {
         parent::__construct($entityManager, AtendimentoVacina::class);
     }
+
+    public function removerAplicacao(int $idAplicacao): void
+    {
+        $aplicacao = $this->find($idAplicacao);
+
+        if(!$aplicacao instanceof AtendimentoVacina){
+            throw new \Exception('Aplicacao de vacina nao encontrada!');
+        }
+
+        $this->remove($aplicacao);
+    }
 }

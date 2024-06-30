@@ -5,7 +5,10 @@ namespace App\Entity;
 use App\Repository\AtendimentoRepository;
 use App\Traits\Timestamps;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Table(schema: 'clinica', name: 'atendimento')]
 #[ORM\Entity(AtendimentoRepository::class)]
@@ -53,7 +56,7 @@ class Atendimento extends AbstractEntity
      */
     #[ORM\ManyToOne(targetEntity: Clinica::class)]
     #[ORM\JoinColumn(name: 'clinica', referencedColumnName: 'id', nullable: false)]
-    private Animal $clinica;
+    private Clinica $clinica;
 
     /**
      * @var ProfissionalClinica
@@ -75,6 +78,17 @@ class Atendimento extends AbstractEntity
     #[ORM\ManyToOne(targetEntity: Pagamento::class)]
     #[ORM\JoinColumn(name: 'pagamento', referencedColumnName: 'id', nullable: true)]
     private ?Pagamento $pagamento = null;
+
+    /**
+     * @var ArrayCollection
+     */
+    #[ORM\OneToMany(targetEntity: AtendimentoVacina::class, mappedBy: 'atendimento', cascade: ['persist'])]
+    private Collection $aplicacoesVacinas;
+
+    public function __construct()
+    {
+        $this->aplicacoesVacinas = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -227,5 +241,18 @@ class Atendimento extends AbstractEntity
     {
         $this->pagamento = $pagamento;
         return $this;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getAplicacoesVacinas(): Collection
+    {
+        return $this->aplicacoesVacinas;
+    }
+
+    public function addVacina(AtendimentoVacina $atendimentoVacina): void
+    {
+        $this->getAplicacoesVacinas()->add($atendimentoVacina);
     }
 }

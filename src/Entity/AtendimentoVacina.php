@@ -25,14 +25,14 @@ class AtendimentoVacina extends AbstractEntity
     /**
      * @var Atendimento
      */
-    #[ORM\ManyToOne(targetEntity: Atendimento::class)]
+    #[ORM\ManyToOne(targetEntity: Atendimento::class, inversedBy: 'aplicacoesVacinas')]
     #[ORM\JoinColumn(name: 'atendimento', referencedColumnName: 'id', nullable: false)]
     private Atendimento $atendimento;
 
     /**
      * @var Vacina
      */
-    #[ORM\ManyToOne(targetEntity: Vacina::class)]
+    #[ORM\ManyToOne(targetEntity: Vacina::class, inversedBy: 'atendimentos')]
     #[ORM\JoinColumn(name: 'vacina', referencedColumnName: 'id', nullable: false)]
     private Vacina $vacina;
 

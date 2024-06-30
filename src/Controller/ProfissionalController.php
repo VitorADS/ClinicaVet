@@ -26,13 +26,13 @@ class ProfissionalController extends AbstractController
     }
 
     #[Route('/profissional/criar', name: 'app_profissional_criar', methods: ['GET', 'POST'])]
-    public function create(Request $request): Response
+    public function createProfissional(Request $request): Response
     {
         return parent::create($request);
     }
 
     #[Route('/profissional/editar/{id}', name: 'app_profissional_editar', methods: ['GET', 'POST'])]
-    public function editar(Request $request, int $id): Response
+    public function editarProfissional(Request $request, int $id): Response
     {
         return parent::editar($request, $id);
     }

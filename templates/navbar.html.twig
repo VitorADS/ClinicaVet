@@ -19,10 +19,13 @@
                     <a class="nav-link {% if 'profissional' in app.request.get('_route') %} active{% endif %}"
                     aria-current="page" href="{{path('app_profissional_home')}}">Profissionais</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link {% if 'animal' in app.request.get('_route') %} active{% endif %}"
                     aria-current="page" href="{{path('app_animal_home')}}">Animais</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'vacina' in app.request.get('_route') %} active{% endif %}"
+                    aria-current="page" href="{{path('app_vacina_home')}}">Vacinas</a>
                 </li>
                 {# {% if 'ROLE_ADMIN' in user.roles %}                
                     <li class="nav-item">

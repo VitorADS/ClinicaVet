@@ -1,0 +1,33 @@
+{% extends 'vacina/basevacina.html.twig' %}
+
+{% block title %}Vacinas{% endblock %}
+
+{% block content %}
+{% include "alerts/message.html.twig" %}
+<h3>Vacinas</h3><hr>
+<table class="table table-dark table-striped border border-black text-center mt-4">
+    <thead>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Acoes</th>
+    </thead>
+    <tbody>
+        {% for registro in registros %}
+            <tr>
+                <td># {{ registro.id }}</td>
+                <td>{{ registro.nome }}</td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{path('app_vacina_editar', {id: registro.id})}}" class="btn btn-sm btn-primary" title="Editar">
+                            E
+                        </a>
+                        <form action="{{path('app_vacina_remover', {id: registro.id})}}" method="POST">
+                            <button class="btn btn-sm btn-danger ms-1" title="Remover">X</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

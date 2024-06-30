@@ -49,4 +49,18 @@ class AtendimentoController extends AbstractController
 
         return parent::create($request);
     }
+
+    #[Route('/atendimento/editar/{id}', name: 'app_atendimento_editar', methods:['GET', 'POST'])]
+    public function editar(Request $request, int $id): Response
+    {
+        if(!$this->existeRegistro($id)){
+            $this->addFlash('danger', 'Registro nao encontrado!');
+            return $this->redirectToRoute('app_atendimento_home');
+        }
+
+        $this->formParams['clinica'] = [$this->registro->getClinica()];
+        $this->formParams['profissionaisClinica'] = [$this->registro->getProfissionalClinica()];
+        $this->viewParams['vacinas'] = $this->registro->getAplicacoesVacinas();
+        return parent::editar($request, $id);
+    }
 }

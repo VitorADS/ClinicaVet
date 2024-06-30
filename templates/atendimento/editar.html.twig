@@ -1,0 +1,38 @@
+{% extends 'atendimento/baseatendimento.html.twig' %}
+
+{% block title %}Editar atendimento{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+    {% include "alerts/message.html.twig" %}
+        <h3>Editar atendimento</h3><hr>
+        {{ form(form) }} <hr>
+
+        <h3>Aplicacoes de vacinas</h3>
+
+        <table class="table table-dark table-striped border border-black text-center mt-2">
+            <a data-bs-toggle="modal" data-bs-target="#modalVacina" onclick="carregarVacinas({{registro.id}})" class="btn btn-sm btn-primary" href="{{path('app_vacina_adicionar_aplicacao', {idAtendimento: registro.id})}}">Adicionar</a>
+            <thead>
+                <th>Nome</th>
+                <th>Acoes</th>
+            </thead>
+            <tbody>
+                {% for vacina in vacinas %}
+                    <tr>
+                        <td>{{ vacina.vacina.nome }}</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <form action="{{path('app_vacina_remover_aplicacao', {idAtendimento: registro.id})}}" method="POST">
+                                    <button class="btn btn-sm btn-danger ms-1" name="vacina" value="{{vacina.id}}" title="Remover">X</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% include "atendimento/adicionarVacina.html.twig" %}
+<script src="{{ asset('js/vacinas.js') }}"></script>
+{% endblock %}

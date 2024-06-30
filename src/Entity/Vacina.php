@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Repository\VacinaRepository;
 use App\Traits\Timestamps;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Table(schema: 'clinica', name: 'vacina')]
 #[ORM\Entity(VacinaRepository::class)]
@@ -29,6 +32,17 @@ class Vacina extends AbstractEntity
     private string $nome;
 
     /**
+     * @var ArrayCollection
+     */
+    #[ORM\OneToMany(targetEntity: AtendimentoVacina::class, mappedBy: 'vacina')]
+    private Collection $atendimentos;
+
+    public function __construct()
+    {
+        $this->atendimentos = new ArrayCollection();
+    }
+
+    /**
      * @return int
      */
     public function getId(): ?int
@@ -50,5 +64,13 @@ class Vacina extends AbstractEntity
     public function setNome(string $nome): void
     {
         $this->nome = $nome;
+    }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getAtendimentos(): Collection
+    {
+        return $this->atendimentos;
     }
 }

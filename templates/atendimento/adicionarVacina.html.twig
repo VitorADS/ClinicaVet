@@ -1,0 +1,25 @@
+ <div class="modal fade" id="modalVacina" tabindex="-1" aria-labelledby="modalVacinaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalVacinaLabel">Adicionar aplicacao de vacina</h5>
+                <button type="button" id="fecharModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="vacina" class="col-form-label">Vacina:</label>
+                        <select name="vacina" id="vacina" class="form-select">
+                            
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="adicionarAplicacao({{registro.id}})">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>

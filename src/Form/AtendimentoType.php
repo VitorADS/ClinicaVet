@@ -31,7 +31,7 @@ class AtendimentoType extends AbstractType
                 'required' => false
             ])
             ->add('data', DateType::class, [
-                'label' => 'Data do atendimentoi',
+                'label' => 'Data do atendimento',
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
@@ -54,6 +54,12 @@ class AtendimentoType extends AbstractType
                 }
             ])
             ->add('profissionalClinica', EntityType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Informe o profissional'
+                    ])
+                    ],
                 'class' => ProfissionalClinica::class,
                 'choices' => $options['profissionaisClinica'],
                 'choice_label' => function (ProfissionalClinica $profissionalClinica): string {
@@ -81,7 +87,7 @@ class AtendimentoType extends AbstractType
             'data_class' => Atendimento::class,
             'editar' => false,
             'profissionaisClinica' => [],
-            'clinica' => null
+            'clinica' => []
         ]);
     }
 }

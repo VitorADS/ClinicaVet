@@ -3,8 +3,8 @@
 {% block title %}Criar atendimento{% endblock %}
 
 {% block content %}
-{% include "alerts/message.html.twig" %}
     <div class="form-container">
+    {% include "alerts/message.html.twig" %}
         <h3>Criar atendimento</h3><hr>
         {{ form(form) }}
     </div>

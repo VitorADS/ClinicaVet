@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HomeController extends AbstractController
@@ -32,13 +33,16 @@ class HomeController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        if($error instanceof BadCredentialsException){
+            $this->addFlash('danger', 'E-mail e/ou senha incorretos!');
+        }
+
         return $this->render('home/index.html.twig', compact(
-            'error',
             'lastUsername'
         ));
     }
 
-    #[Route('/register', name: 'app_home_register', methods:['GET', 'POST'])]
+    // #[Route('/register', name: 'app_home_register', methods:['GET', 'POST'])]
     public function register(Request $request, UserPasswordHasherInterface $hasher): Response
     {
         $profissional = new Profissional();

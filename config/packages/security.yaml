@@ -41,6 +41,7 @@ security:
         - { path: ^/profissional, roles: ROLE_USER }
         - { path: ^/responsavel, roles: ROLE_USER }
         - { path: ^/animal, roles: ROLE_USER }
+        - { path: ^/vacina, roles: ROLE_USER }
         - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:

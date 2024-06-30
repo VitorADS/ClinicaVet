@@ -3,6 +3,9 @@
 {% block title %}Ultimos atendimentos{% endblock %}
 
 {% block content %}
+{% include "alerts/message.html.twig" %}
+
+<h3>Atendimentos</h3><hr>
 
 {% if registros is empty %}
     <div class="container d-flex justify-content-center align-items-center" style="height: 100%">
@@ -14,11 +17,32 @@
 
 <table class="table table-dark table-striped border border-black text-center mt-4">
     <thead>
-        <th>a</th>
-        <th>b</th>
+        <th>Animal</th>
+        <th>Responsavel</th>
+        <th>Clinica</th>
+        <th>Profissional</th>
+        <th>Data</th>
+        <th>Status</th>
+        <th>Acoes</th>
     </thead>
     <tbody>
-        
+        {% for registro in registros %}
+            <tr>
+                <td> {{registro.animal.nome}} </td>
+                <td> {{registro.animal.getResponsavelPadrao.responsavel.nome}} </td>
+                <td> {{registro.clinica.nome}} </td>
+                <td> {{registro.profissionalClinica.profissional.nome}} </td>
+                <td> {{registro.data|date('d/m/Y')}} </td>
+                <td> {{registro.statusAtendimento.status}} </td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <a title="Acessar atendimento" href="{{path('app_atendimento_editar', {id: registro.id})}}" class="btn btn-sm btn-primary">
+                            A
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
 
