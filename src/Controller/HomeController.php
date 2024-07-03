@@ -42,8 +42,8 @@ class HomeController extends AbstractController
         ));
     }
 
-    // #[Route('/register', name: 'app_home_register', methods:['GET', 'POST'])]
-    public function register(Request $request, UserPasswordHasherInterface $hasher): Response
+    #[Route('/register', name: 'app_home_register', methods:['GET', 'POST'])]
+    public function register(Request $request): Response
     {
         $profissional = new Profissional();
         $registerForm = $this->createForm(ProfissionalType::class, $profissional);
@@ -56,7 +56,6 @@ class HomeController extends AbstractController
 
         if($registerForm->isValid()){
             $submittedData = $registerForm->getData();
-            $profissional->setPassword($hasher->hashPassword($profissional, $registerForm->get('password')->getData()));
             $profissional = $this->profissionalService->save($profissional);
 
             $this->addFlash('success', 'Profissional registrado com sucesso!');
