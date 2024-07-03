@@ -5,6 +5,13 @@
 {% block content %}
 {% include "alerts/message.html.twig" %}
 <h3>Vacinas</h3><hr>
+{% if registros is empty %}
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100%">
+        <div class="row justify-content-center">
+            <h4>Sem vacinas cadastrados ate o momento...</h4>
+        </div>
+    </div>
+{% else %}
 <table class="table table-dark table-striped border border-black text-center mt-4">
     <thead>
         <th>ID</th>
@@ -30,4 +37,5 @@
         {% endfor %}
     </tbody>
 </table>
+{% endif %}
 {% endblock %}
