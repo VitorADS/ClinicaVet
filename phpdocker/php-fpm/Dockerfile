@@ -3,6 +3,7 @@ WORKDIR "/application"
 
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
+    	php8.3-memcached \
         php8.3-pgsql \
         php8.3-xdebug \
         nano \

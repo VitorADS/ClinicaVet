@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Profissional;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -70,6 +71,21 @@ class ProfissionalType extends AbstractType
                 ],
                 'first_options' => ['label' => 'Senha'],
                 'second_options' => ['label' => 'Confirme sua senha']
+            ])
+            ->add('roles', ChoiceType::class, [
+                'label' => 'Permissoes',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Selecione um'
+                    ])
+                ],
+                'choices' => [
+                    'Usuario' => 'ROLE_USER',
+                    'Administrador' => 'ROLE_ADMIN'
+                ],
+                'expanded' => true,
+                'multiple' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $options['editar'] ? 'Salvar' : 'Criar',
