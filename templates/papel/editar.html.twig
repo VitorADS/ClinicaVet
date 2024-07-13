@@ -1,11 +1,11 @@
-{% extends '/animal/baseanimal.html.twig' %}
+{% extends 'papel/base.html.twig' %}
 
-{% block title %}Cadastrar animal{% endblock %}
+{% block title %}Editar papel{% endblock %}
 
 {% block content %}
 {% include "alerts/message.html.twig" %}
+    <h3>Editar papel</h3><hr>
     <div class="form-container">
-        <h3>Cadastrar responsavel</h3><hr>
         {{ form(form) }}
     </div>
 {% endblock %}

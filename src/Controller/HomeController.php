@@ -7,12 +7,14 @@ use App\Form\ProfissionalType;
 use App\Service\ProfissionalService;
 use App\Utils\Form;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class HomeController extends AbstractController
 {
@@ -40,6 +42,14 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', compact(
             'lastUsername'
         ));
+    }
+
+    #[Route('/logout', name: 'app_home_logout', methods:['GET', 'POST'])]
+    public function logout(Security $security, CacheInterface $cache): Response
+    {
+        $cache->delete('papel');
+        $response = $security->logout(false);
+        return $this->redirectToRoute('app_home_login');
     }
 
     #[Route('/register', name: 'app_home_register', methods:['GET', 'POST'])]

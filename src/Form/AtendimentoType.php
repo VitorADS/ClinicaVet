@@ -43,7 +43,7 @@ class AtendimentoType extends AbstractType
                 'label' => 'Animal',
                 'class' => Animal::class,
                 'choice_label' => function (Animal $animal): string {
-                    return $animal;
+                    return (string) $animal;
                 }
             ])
             ->add('clinica', EntityType::class, [
@@ -59,7 +59,7 @@ class AtendimentoType extends AbstractType
                     new NotBlank([
                         'message' => 'Informe o profissional'
                     ])
-                    ],
+                ],
                 'class' => ProfissionalClinica::class,
                 'choices' => $options['profissionaisClinica'],
                 'choice_label' => function (ProfissionalClinica $profissionalClinica): string {

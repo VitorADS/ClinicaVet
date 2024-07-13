@@ -14,6 +14,8 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            custom_authenticators:
+                - App\Security\ApiKeyAuthenticator
             lazy: true
             provider: app_user_provider
 
@@ -22,9 +24,6 @@ security:
                 login_path: app_home_login
                 check_path: app_home_login
                 default_target_path: app_atendimento_home
-
-            logout:
-                path: app_home_logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

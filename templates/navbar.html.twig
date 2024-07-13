@@ -27,6 +27,10 @@
                     <a class="nav-link {% if 'vacina' in app.request.get('_route') %} active{% endif %}"
                     aria-current="page" href="{{path('app_vacina_home')}}">Vacinas</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'papel' in app.request.get('_route') %} active{% endif %}"
+                    aria-current="page" href="{{path('app_papel_home')}}">Papeis</a>
+                </li>
                 {# {% if 'ROLE_ADMIN' in user.roles %}                
                     <li class="nav-item">
                         <a class="nav-link {% if 'admin' in app.request.get('_route') %} active{% endif %}"

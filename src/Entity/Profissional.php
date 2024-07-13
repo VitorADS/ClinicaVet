@@ -25,7 +25,7 @@ class Profissional extends AbstractEntity implements UserInterface, PasswordAuth
     #[ORM\Column(name: 'id', type: 'integer', nullable: false)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
-    private ?int $id;
+    private ?int $id = null;
 
     /**
      * @var string
@@ -55,7 +55,7 @@ class Profissional extends AbstractEntity implements UserInterface, PasswordAuth
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    private string $password;
 
     /**
      * @var PersistentCollection
@@ -63,9 +63,16 @@ class Profissional extends AbstractEntity implements UserInterface, PasswordAuth
     #[ORM\OneToMany(targetEntity: ProfissionalClinica::class, mappedBy: 'profissional')]
     private Collection $profissionaisClinica;
 
+    /**
+     * @var Collection<int, Papel>
+     */
+    #[ORM\ManyToMany(targetEntity: Papel::class, mappedBy: 'profissional')]
+    private Collection $papeis;
+
     public function __construct()
     {
         $this->profissionaisClinica = new ArrayCollection();
+        $this->papeis = new ArrayCollection();
     }
 
     /**
@@ -189,5 +196,32 @@ class Profissional extends AbstractEntity implements UserInterface, PasswordAuth
     public function __tostring(): string
     {
         return $this->getNome() . " ({$this->getId()})";
+    }
+
+    /**
+     * @return Collection<int, Papel>
+     */
+    public function getPapeis(): Collection
+    {
+        return $this->papeis;
+    }
+
+    public function addPapeis(Papel $papei): static
+    {
+        if (!$this->papeis->contains($papei)) {
+            $this->papeis->add($papei);
+            $papei->addProfissional($this);
+        }
+
+        return $this;
+    }
+
+    public function removePapeis(Papel $papei): static
+    {
+        if ($this->papeis->removeElement($papei)) {
+            $papei->removeProfissional($this);
+        }
+
+        return $this;
     }
 }

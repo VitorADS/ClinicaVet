@@ -2,39 +2,32 @@
 
 namespace App\Form;
 
-use App\Entity\Atendimento;
-use App\Entity\AtendimentoVacina;
-use App\Entity\Vacina;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AtendimentoVacinaType extends AbstractType
+class LoginType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('atendimento', EntityType::class, [
+            ->add('_username', TextType::class, [
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Selecione um atendimento'
+                        'message' => 'Informe o e-mail'
                     ])
-                ],
-                'class' => Atendimento::class,
-                'choice_label' => 'id',
+                ]
             ])
-            ->add('vacina', EntityType::class, [
+            ->add('_password', TextType::class, [
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Selecione uma vacina'
+                        'message' => 'Informe a senha'
                     ])
-                ],
-                'class' => Vacina::class,
-                'choice_label' => 'id',
+                ]
             ])
         ;
     }
@@ -42,8 +35,7 @@ class AtendimentoVacinaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => AtendimentoVacina::class,
-            'csrf_protection' => false
+            // Configure your form options here
         ]);
     }
 }

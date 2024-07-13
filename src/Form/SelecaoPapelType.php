@@ -2,30 +2,35 @@
 
 namespace App\Form;
 
-use App\Entity\Vacina;
+use App\DTO\PapelDTO;
+use App\Entity\Papel;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class VacinaType extends AbstractType
+class SelecaoPapelType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nome', TextType::class, [
-                'label' => 'Nome',
+            ->add('papel', EntityType::class, [
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Insira o nome da vacina'
+                        'message' => 'Selecione um papel'
                     ])
-                ]
+                ],
+                'class' => Papel::class,
+                'choices' => $options['papeis'],
+                'choice_label' => function (Papel $papel): string {
+                    return (string) $papel;
+                }               
             ])
             ->add('submit', SubmitType::class, [
-                'label' => $options['editar'] ? 'Salvar' : 'Criar',
+                'label' => 'Selecionar',
                 'attr' => [
                     'class' => 'btn-secondary'
                 ]
@@ -36,8 +41,8 @@ class VacinaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Vacina::class,
-            'editar' => false
+            'data_class' => PapelDTO::class,
+            'papeis' => []
         ]);
     }
 }
