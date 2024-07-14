@@ -25,8 +25,13 @@ class RouterEventListener
     public function __invoke(RequestEvent $event): void
     {
         $request = $event->getRequest();
+
+        if($request->attributes->get('_route') === 'app_home_logout') {
+            return;
+        }
+
         $cache = $this->cache;
-        $result = $this->cache->get('papel', function () use ($request, $cache) {
+        $result = $this->cache->get('papel', function () use ($request) {
             if($this->token->getToken() && $request->attributes->get('_route') !== 'app_papel_selecionar') {
                 $request->getSession()->getFlashBag()->add('danger', 'Selecione o papel');
                 return new RedirectResponse($this->router->generate('app_papel_selecionar'));

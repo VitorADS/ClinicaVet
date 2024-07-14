@@ -1,11 +1,11 @@
 framework:
     cache:
         app: cache.adapter.memcached
-        default_memcached_provider: 'memcached://172.28.0.3:11211'
+        default_memcached_provider: 'memcached://172.28.0.2:11211'
         pools:
             my_memcached_pool:
                 adapter: cache.adapter.memcached
-                provider: 'memcached://172.28.0.3:11211'
+                provider: 'memcached://172.28.0.2:11211'
         # Unique name of your app: used to compute stable namespaces for cache keys.
         #prefix_seed: your_vendor_name/app_name
 
